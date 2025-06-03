@@ -17,6 +17,11 @@ const m = new mysqlHandler({
 
 
 (async function () {
+    const now = new Date();
+    if (now.getHours() < 6) {
+        return;
+    }
+
     const current = await s.getCurrentStats('TikTok')
     const results = []
     const accounts = await m.getAccounts()
