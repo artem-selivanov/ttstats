@@ -3,7 +3,8 @@ const mysqlHandler = require('./helpers/bd');
 const ttHandler = require('./helpers/tiktok');
 const path = require('path');
 const pathWay = process.cwd().indexOf("/root")>-1?"/root/ttstats":"D:\\OpenServer\\domains\\ttstats"
-require('dotenv').config({path: path.join(pathWay, `.env`)});
+//require('dotenv').config({path: path.join(pathWay, `.env`)});
+require('dotenv').config({});
 const moment = require('moment')
 
 const s = new SheetHandler(process.env.SPREADSHEET);
@@ -22,13 +23,14 @@ const m = new mysqlHandler({
         return;
     }
 
-    const current = await s.getCurrentStats('TikTok')
+    const current = await s.getCurrentStats('Complex')
+    console.log(current)
     const results = []
     const accounts = await m.getAccounts()
     for (let {account_id, name, exchange_rate, token} of accounts) {
         const t = new ttHandler({api: token, id: account_id});
         const names = await t.getCampaignsNames()
-        for (let i = 7; i > 0; i--) {
+        for (let i = 21; i > 0; i--) {
             const day = i
             const date = moment().subtract(day, 'days').format('YYYY-MM-DD');
             console.log(date)
@@ -39,6 +41,7 @@ const m = new mysqlHandler({
             const ordersById = await m.getOrders(day)
             const stats = await t.getCampaignStats(date)
             for (let {metrics, dimensions} of stats) {
+                console.log({metrics, dimensions})
                 const clicks = parseInt(metrics.clicks)
                 const impressions = parseInt(metrics.impressions)
                 const spend = parseFloat(metrics.spend)*parseFloat(exchange_rate)
@@ -62,12 +65,13 @@ const m = new mysqlHandler({
                     cpm.toFixed(2),
                     cpl.toFixed(2),
                     leads,
-                    sum.toFixed(2)
+                    sum.toFixed(2),
+                    'TikTok'
                 ]
                 results.push(row)
             }
         }
     }
-    await s.addRows(results, "TikTok")
+    await s.addRows(results, "Complex")
     //console.log(results)
 })()

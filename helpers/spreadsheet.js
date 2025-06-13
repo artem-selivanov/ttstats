@@ -118,7 +118,7 @@ class SheetHandler {
     async getCurrentStats(tab){
         const arr = await this.getValues(tab)
         const all = new Set()
-        arr.splice(1).map(i=>(all.add(`${i[0]}${i[1]}`)))
+        arr.splice(1).filter(i=>i[14]=='TikTok').map(i=>(all.add(`${i[0]}${i[1]}`)))
         return all
     }
 
