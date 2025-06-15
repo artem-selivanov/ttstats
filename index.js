@@ -2,7 +2,7 @@ const SheetHandler = require('./helpers/spreadsheet');
 const mysqlHandler = require('./helpers/bd');
 const ttHandler = require('./helpers/tiktok');
 const path = require('path');
-const pathWay = process.cwd().indexOf("/root")>-1?"/root/ttstats":"D:\\OpenServer\\domains\\ttstats"
+const pathWay = process.cwd().indexOf("/root") > -1 ? "/root/ttstats" : "D:\\OpenServer\\domains\\ttstats"
 //require('dotenv').config({path: path.join(pathWay, `.env`)});
 require('dotenv').config({});
 const moment = require('moment')
@@ -44,13 +44,13 @@ const m = new mysqlHandler({
                 console.log({metrics, dimensions})
                 const clicks = parseInt(metrics.clicks)
                 const impressions = parseInt(metrics.impressions)
-                const spend = parseFloat(metrics.spend)*parseFloat(exchange_rate)
+                const spend = parseFloat(metrics.spend) * parseFloat(exchange_rate)
                 const ctr = impressions == 0 ? 0 : clicks * 100 / impressions
                 const cpm = impressions == 0 ? 0 : spend * 1000 / impressions
                 const leads = ordersById[dimensions.campaign_id]?.count || 0
                 const sum = ordersById[dimensions.campaign_id]?.price || 0
                 const cpl = leads == 0 ? 0 : spend / leads
-                const cpc = spend / clicks
+                const cpc = clicks == 0 ? 0 : spend / clicks
                 if (spend == 0 && impressions == 0 && clicks == 0) continue
                 const row = [date,
                     account_id,
