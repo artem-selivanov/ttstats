@@ -30,8 +30,8 @@ const m = new mysqlHandler({
     const results = []
     const accounts = await m.getAccounts()
     for (let {account_id, name, exchange_rate, token} of accounts) {
-        if (account_id.toString()!="7497215439190327303") continue
-        console.log(account_id)
+        /*if (account_id.toString()!="7497215439190327303") continue
+        console.log(account_id)*/
 
         const t = new ttHandler({api: token, id: account_id});
         const names = await t.getCampaignsNames()
