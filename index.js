@@ -2,7 +2,7 @@ const SheetHandler = require('./helpers/spreadsheet');
 const mysqlHandler = require('./helpers/bd');
 const ttHandler = require('./helpers/tiktok');
 const path = require('path');
-const pathWay = process.cwd().indexOf("/root") > -1 ? "/root/ttstats" : "D:\\OpenServer\\domains\\ttstats"
+const pathWay = process.cwd().indexOf("domains") == -1 ? "/root/ttstats" : "D:\\OpenServer\\domains\\ttstats"
 //require('dotenv').config({path: path.join(pathWay, `.env`)});
 require('dotenv').config({});
 const moment = require('moment')
