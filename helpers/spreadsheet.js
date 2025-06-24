@@ -115,10 +115,15 @@ class SheetHandler {
         return responce.data.sheets[0].properties.sheetId
     }
 
-    async getCurrentStats(tab){
+    async getCurrentStats(tab, days){
         const arr = await this.getValues(tab)
         const all = new Set()
-        arr.splice(1).filter(i=>i[14]=='TikTok').map(i=>(all.add(`${i[0]}${i[1]}`)))
+        const dates = []
+        for (let i = days; i > 0; i--) {
+            const date = moment().subtract(day, 'days').format('YYYY-MM-DD');
+            dates.push(date)
+        }
+        arr.splice(1).filter(i=>i[14]=='TikTok'&&dates.includes(i[0])).map(i=>(all.add(`${i[0]}${i[1]}`)))
         return all
     }
 

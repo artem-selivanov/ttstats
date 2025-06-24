@@ -24,8 +24,8 @@ const m = new mysqlHandler({
     if (now.getHours() < 6) {
         return;
     }
-
-    const current = await s.getCurrentStats('Complex')
+    const days = 7
+    const current = await s.getCurrentStats('Complex', days)
     //console.log(current)
     const results = []
     const accounts = await m.getAccounts()
@@ -35,7 +35,7 @@ const m = new mysqlHandler({
 
         const t = new ttHandler({api: token, id: account_id});
         const names = await t.getCampaignsNames()
-        for (let i = 7; i > 0; i--) {
+        for (let i = days; i > 0; i--) {
             const day = i
             const date = moment().subtract(day, 'days').format('YYYY-MM-DD');
             console.log(date)
