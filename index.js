@@ -16,7 +16,7 @@ const m = new mysqlHandler({
     charset: 'cp1251'
 });
 
-
+//7497215439190327303
 (async function () {
     const now = new Date();
     if (now.getHours() < 6) {
@@ -24,13 +24,16 @@ const m = new mysqlHandler({
     }
 
     const current = await s.getCurrentStats('Complex')
-    console.log(current)
+    //console.log(current)
     const results = []
     const accounts = await m.getAccounts()
     for (let {account_id, name, exchange_rate, token} of accounts) {
+        if (account_id.toString()!="7497215439190327303") continue
+        console.log(account_id)
+
         const t = new ttHandler({api: token, id: account_id});
         const names = await t.getCampaignsNames()
-        for (let i = 21; i > 0; i--) {
+        for (let i = 7; i > 0; i--) {
             const day = i
             const date = moment().subtract(day, 'days').format('YYYY-MM-DD');
             console.log(date)
@@ -55,7 +58,7 @@ const m = new mysqlHandler({
                 const row = [date,
                     account_id,
                     name,
-                    dimensions.campaign_id,
+                    `'${dimensions.campaign_id}`,
                     names[dimensions.campaign_id],
                     impressions,
                     clicks,
