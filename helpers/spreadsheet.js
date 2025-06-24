@@ -121,7 +121,7 @@ class SheetHandler {
         const all = new Set()
         const dates = []
         for (let i = days; i > 0; i--) {
-            const date = moment().subtract(day, 'days').format('YYYY-MM-DD');
+            const date = moment().subtract(i, 'days').format('YYYY-MM-DD');
             dates.push(date)
         }
         arr.splice(1).filter(i=>i[14]=='TikTok'&&dates.includes(i[0])).map(i=>(all.add(`${i[0]}${i[1]}`)))
