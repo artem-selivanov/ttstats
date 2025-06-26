@@ -54,7 +54,7 @@ class SheetHandler {
         const updateOptions = {
             spreadsheetId: this.id,
             //range: `${tab}`,
-            `${tab}!A100000:O`,
+            range: `${tab}!A100000:O`,
         }
         const responce = await this.api.spreadsheets.values.get(updateOptions)
         return responce.data.values
