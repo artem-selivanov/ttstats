@@ -44,7 +44,7 @@ class SheetHandler {
 
     async addRows(row, tab) {
         const arr = await this.getValues(tab)
-        const index = arr.length + 1
+        const index = arr.length + 1+100000
         await this.setValues(tab, row, `A${index}`)
     }
 
